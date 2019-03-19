@@ -11,9 +11,6 @@
 
 #include "MFRC522.h"
 
-
-
-
 void app_main()
 {
 	printf("Hello world!\n");
@@ -35,19 +32,10 @@ void app_main()
 	PCD_SPI();
 	PCD_Init();
 	uint32_t u32CardNo;
-	uint32_t u32Cnt = 0;
 	while(1)
 	{
 		if(PICC_IsNewCardPresent())
 		{
-			printf("Card No = %u\r\n", u32Cnt++);
-			printf("Antenna gain = [%x]\n", PCD_GetAntennaGain());
-
-			PCD_SetAntennaGain(RxGain_48dB);
-
-			printf("Antenna gain = [%x]\n", PCD_GetAntennaGain());
-
-
 			printf("Card present \r\n");
 			if(PICC_ReadCardSerial())
 			{
@@ -57,19 +45,10 @@ void app_main()
 				u32CardNo = (u32CardNo) | ((uint32_t)uid.uidByte[1] << 16);
 				u32CardNo = (u32CardNo) | ((uint32_t)uid.uidByte[2] <<  8);
 				u32CardNo = (u32CardNo) | ((uint32_t)uid.uidByte[3] <<  0);
-				printf("CardNo = [%x]\r\n", u32CardNo );
-//				for(int i = 0; i < 10; i++)
-//					printf("%x ", uid.uidByte[i]);
+				printf("CardNo = [%x][%u]\r\n", u32CardNo, u32CardNo);
 				printf("\r\n");
-				uid.size = 0;
-				uid.sak = 0;
-				for(int i = 0 ;i < 10; i++)
-					uid.uidByte[i] = 0;
 			}
 		}
 		vTaskDelay(pdMS_TO_TICKS(100));
 	}
-
-
-
 }

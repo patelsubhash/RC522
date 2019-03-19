@@ -140,7 +140,6 @@ esp_err_t PCD_ReadRegisterMany(
 	memset(values, 0, count);
 	esp_err_t ret;
 	uint8_t reg = Register | 0x80;
-	uint8_t val;
 	spi_transaction_t t;
 	memset(&t, 0, sizeof(t));       //Zero out the transaction
 	t.length = 8;
@@ -225,10 +224,6 @@ void PCD_SPI()
 }
 void PCD_Init()
 {
-
-
-	uint8_t hardreset = 0;
-
 	gpio_pad_select_gpio(PIN_NUM_RST);
 	gpio_set_direction(PIN_NUM_RST, GPIO_MODE_OUTPUT);
 
