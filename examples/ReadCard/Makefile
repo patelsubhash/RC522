@@ -5,5 +5,6 @@
 
 PROJECT_NAME := Template
 
-include $(IDF_PATH)/make/project.mk
+EXTRA_COMPONENT_DIRS := $(CURDIR)/../../../
 
+include $(IDF_PATH)/make/project.mk
