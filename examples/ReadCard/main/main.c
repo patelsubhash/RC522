@@ -4,12 +4,13 @@
 #include "freertos/task.h"
 #include "esp_system.h"
 #include "esp_spi_flash.h"
-
+#include "esp_log.h"
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 
-
 #include "MFRC522.h"
+
+static const char *TAG = "example_app";
 
 void app_main()
 {
@@ -29,9 +30,14 @@ void app_main()
 			(chip_info.features & CHIP_FEATURE_EMB_FLASH) ? "embedded" : "external");
 
 
+    ESP_LOGI(TAG, "Initializing SPI");
 	PCD_SPI();
+    ESP_LOGI(TAG, "Initializing driver");
 	PCD_Init();
 	uint32_t u32CardNo;
+
+    ESP_LOGI(TAG, "Starting the loop");
+    ESP_LOGI(TAG, "Please scan an RFID card");
 	while(1)
 	{
 		if(PICC_IsNewCardPresent())
